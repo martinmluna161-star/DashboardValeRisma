@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conciliación & Plan de Trabajo - Dra. Risma Valentina | Lógica</title>
+    <title>Plataforma de Gestión & Propuesta - Dra. Risma Valentina | Lógica</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Chart.js CDN -->
@@ -12,11 +12,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        .tab-btn.active {
+            border-bottom: 3px solid #2563eb;
+            color: #2563eb;
+            font-weight: 700;
+            background-color: #f1f5f9;
+        }
     </style>
 </head>
 <body class="text-slate-800 pb-12">
 
-    <!-- Header / Navbar -->
+    <!-- Header Principal -->
     <header class="bg-slate-900 text-white shadow-md">
         <div class="max-w-7xl mx-auto px-4 py-4 flex flex-wrap justify-between items-center">
             <div class="flex items-center space-x-3">
@@ -30,363 +36,425 @@
             </div>
             <div class="mt-2 sm:mt-0 bg-slate-800 border border-slate-700 px-3.5 py-1.5 rounded-full text-xs text-slate-300 flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span>Diagnóstico Operativo & Propuesta de Servicio</span>
+                <span>Propuesta de Servicio & Control 2026</span>
+            </div>
+        </div>
+
+        <!-- BARRA DE NAVEGACIÓN SUPERIOR (PESTAÑAS / TABS) -->
+        <div class="bg-slate-800/80 border-t border-slate-700/60 mt-4">
+            <div class="max-w-7xl mx-auto px-4 flex space-x-2 overflow-x-auto text-sm">
+                <button onclick="switchTab('tab-dashboard', this)" class="tab-btn active py-3 px-5 text-slate-300 hover:text-white transition flex items-center gap-2 cursor-pointer whitespace-nowrap">
+                    <i class="fa-solid fa-chart-line text-blue-400"></i> Dashboard & Conciliación
+                </button>
+                <button onclick="switchTab('tab-propuesta', this)" class="tab-btn py-3 px-5 text-slate-300 hover:text-white transition flex items-center gap-2 cursor-pointer whitespace-nowrap">
+                    <i class="fa-solid fa-file-contract text-emerald-400"></i> Propuesta Comercial
+                </button>
+                <button onclick="switchTab('tab-roadmap', this)" class="tab-btn py-3 px-5 text-slate-300 hover:text-white transition flex items-center gap-2 cursor-pointer whitespace-nowrap">
+                    <i class="fa-solid fa-route text-purple-400"></i> Roadmap Primeras 2 Semanas
+                </button>
             </div>
         </div>
     </header>
 
     <main class="max-w-7xl mx-auto px-4 mt-6">
 
-        <!-- Hero Status / Presentación Lógica -->
-        <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-blue-900 text-white p-6 rounded-2xl shadow-lg mb-8 flex flex-col md:flex-row justify-between items-start md:items-center">
-            <div class="mb-4 md:mb-0">
-                <div class="flex items-center gap-2 mb-2">
-                    <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs px-2.5 py-0.5 rounded-full font-semibold">Conciliación Mayo-Junio: 85.1% Éxito</span>
-                    <span class="bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs px-2.5 py-0.5 rounded-full font-semibold">11 Casos a Gestionar</span>
+        <!-- ================================================================= -->
+        <!-- PESTAÑA 1: DASHBOARD & CONCILIACIÓN -->
+        <!-- ================================================================= -->
+        <div id="tab-dashboard" class="tab-content">
+            
+            <!-- Hero Status -->
+            <div class="bg-gradient-to-r from-slate-900 via-indigo-950 to-blue-900 text-white p-6 rounded-2xl shadow-lg mb-8 flex flex-col md:flex-row justify-between items-start md:items-center">
+                <div class="mb-4 md:mb-0">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs px-2.5 py-0.5 rounded-full font-semibold">Conciliación Mayo-Junio: 85.1% Éxito</span>
+                        <span class="bg-amber-500/20 text-amber-300 border border-amber-500/30 text-xs px-2.5 py-0.5 rounded-full font-semibold">11 Casos a Gestionar</span>
+                    </div>
+                    <h2 class="text-2xl font-bold">Mapeo de Compatibilización & Diagnóstico ERP</h2>
+                    <p class="text-sm text-slate-300 max-w-3xl mt-1">
+                        Análisis cruzado entre la producción del ERP local (74 registros) y las Órdenes de Pago recibidas del Hospital Privado de la Villa en Agosto 2026.
+                    </p>
                 </div>
-                <h2 class="text-2xl font-bold">Mapeo de Compatibilización & Plan de Transformación</h2>
-                <p class="text-sm text-slate-300 max-w-3xl mt-1">
-                    Análisis cruzado entre la producción del ERP local (74 registros) y las Órdenes de Pago recibidas del Hospital Privado de la Villa en Agosto 2026.
-                </p>
-            </div>
-            <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition flex items-center gap-2 shadow-lg">
-                <i class="fa-solid fa-print"></i> Exportar Informe
-            </button>
-        </div>
-
-        <!-- KPIs Principales -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
-                <p class="text-xs font-semibold uppercase text-slate-500">Cobrado Neto Banco (Santander)</p>
-                <h3 class="text-2xl font-black text-emerald-600 mt-1">$4,168,695.60</h3>
-                <p class="text-xs text-slate-500 mt-1">OP 19915 ($3.67M) + OP 19797 ($497k)</p>
+                <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-xl text-sm font-semibold transition flex items-center gap-2 shadow-lg">
+                    <i class="fa-solid fa-print"></i> Exportar Informe
+                </button>
             </div>
 
-            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
-                <p class="text-xs font-semibold uppercase text-slate-500">Prestaciones ERP Matcheadas</p>
-                <h3 class="text-2xl font-black text-blue-600 mt-1">63 Casos</h3>
-                <p class="text-xs text-emerald-600 font-medium mt-1"><i class="fa-solid fa-check-double"></i> Liquidadas en Agosto</p>
-            </div>
+            <!-- KPIs Principales -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                    <p class="text-xs font-semibold uppercase text-slate-500">Cobrado Neto Banco (Santander)</p>
+                    <h3 class="text-2xl font-black text-emerald-600 mt-1">$4,168,695.60</h3>
+                    <p class="text-xs text-slate-500 mt-1">OP 19915 ($3.67M) + OP 19797 ($497k)</p>
+                </div>
 
-            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
-                <p class="text-xs font-semibold uppercase text-slate-500">Observadas / Pendientes</p>
-                <h3 class="text-2xl font-black text-amber-600 mt-1">11 Casos</h3>
-                <p class="text-xs text-amber-700 font-medium mt-1"><i class="fa-solid fa-triangle-exclamation"></i> Requieren Acción Administrativa</p>
-            </div>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                    <p class="text-xs font-semibold uppercase text-slate-500">Prestaciones ERP Matcheadas</p>
+                    <h3 class="text-2xl font-black text-blue-600 mt-1">63 Casos</h3>
+                    <p class="text-xs text-emerald-600 font-medium mt-1"><i class="fa-solid fa-check-double"></i> Liquidadas en Agosto</p>
+                </div>
 
-            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
-                <p class="text-xs font-semibold uppercase text-slate-500">Retenciones Sufridas</p>
-                <h3 class="text-2xl font-black text-slate-700 mt-1">$239,210.51</h3>
-                <p class="text-xs text-slate-500 mt-1">IIBB San Luis ($153k) + Ganancias ($86k)</p>
-            </div>
-        </div>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                    <p class="text-xs font-semibold uppercase text-slate-500">Observadas / Pendientes</p>
+                    <h3 class="text-2xl font-black text-amber-600 mt-1">11 Casos</h3>
+                    <p class="text-xs text-amber-700 font-medium mt-1"><i class="fa-solid fa-triangle-exclamation"></i> Requieren Acción Administrativa</p>
+                </div>
 
-        <!-- Dashboard Charts -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 lg:col-span-2">
-                <h4 class="text-base font-bold text-slate-800 mb-4 flex items-center gap-2">
-                    <i class="fa-solid fa-chart-column text-blue-600"></i> Estado de Conciliación por Obra Social
-                </h4>
-                <div class="h-64">
-                    <canvas id="chartMatching"></canvas>
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                    <p class="text-xs font-semibold uppercase text-slate-500">Retenciones Sufridas</p>
+                    <h3 class="text-2xl font-black text-slate-700 mt-1">$239,210.51</h3>
+                    <p class="text-xs text-slate-500 mt-1">IIBB San Luis ($153k) + Ganancias ($86k)</p>
                 </div>
             </div>
 
-            <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
-                <h4 class="text-base font-bold text-slate-800 mb-4 flex items-center gap-2">
-                    <i class="fa-solid fa-chart-pie text-amber-500"></i> Desglose de Casos No Matcheados
-                </h4>
-                <div class="h-64 flex justify-center items-center">
-                    <canvas id="chartNoMatch"></canvas>
+            <!-- Charts Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 lg:col-span-2">
+                    <h4 class="text-base font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-column text-blue-600"></i> Estado de Conciliación por Obra Social
+                    </h4>
+                    <div class="h-64">
+                        <canvas id="chartMatching"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+                    <h4 class="text-base font-bold text-slate-800 mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-pie text-amber-500"></i> Desglose de Casos No Matcheados
+                    </h4>
+                    <div class="h-64 flex justify-center items-center">
+                        <canvas id="chartNoMatch"></canvas>
+                    </div>
                 </div>
             </div>
+
+            <!-- Tablas Acordeón -->
+            <div class="space-y-6 mb-8">
+                <!-- SECCIÓN 1: NO MATCHEADAS -->
+                <div class="bg-white rounded-2xl shadow-sm border border-amber-300 overflow-hidden">
+                    <button onclick="toggleAccordion('acc-no-matched', 'icon-no-matched')" class="w-full px-6 py-4 bg-amber-50 hover:bg-amber-100/80 border-b border-amber-200 flex flex-wrap justify-between items-center text-left transition cursor-pointer select-none">
+                        <div class="flex items-center gap-3">
+                            <i id="icon-no-matched" class="fa-solid fa-chevron-down text-amber-700 transition-transform duration-200"></i>
+                            <div>
+                                <h3 class="font-bold text-amber-900 text-base flex items-center gap-2">
+                                    <i class="fa-solid fa-triangle-exclamation text-amber-600"></i>
+                                    1. Prestaciones ERP No Matcheadas / Observadas (11 Casos)
+                                </h3>
+                                <p class="text-xs text-amber-800 mt-0.5">Registradas en el ERP de la profesional pero NO liquidadas ni canceladas en el Hospital Privado de la Villa</p>
+                            </div>
+                        </div>
+                        <span class="bg-amber-200 text-amber-900 text-xs font-bold px-3 py-1 rounded-full">Desplegar / Ocultar Detalle</span>
+                    </button>
+
+                    <div id="acc-no-matched" class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-slate-600">
+                            <thead class="text-xs uppercase bg-amber-100/60 text-slate-700 border-b border-amber-200">
+                                <tr>
+                                    <th class="py-3 px-4">Protocolo</th>
+                                    <th class="py-3 px-4">Fecha ERP</th>
+                                    <th class="py-3 px-4">Paciente</th>
+                                    <th class="py-3 px-4">Obra Social</th>
+                                    <th class="py-3 px-4">Estudio</th>
+                                    <th class="py-3 px-4 text-right">Monto ERP</th>
+                                    <th class="py-3 px-4 text-center">Motivo de Inconsistencia / Observación</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 text-xs">
+                                <tr class="hover:bg-amber-50/40">
+                                    <td class="py-3 px-4 font-mono font-medium">26H-000633</td>
+                                    <td class="py-3 px-4">26/05/2026</td>
+                                    <td class="py-3 px-4 font-bold text-slate-800">CRUSEÑO TERESA NOEMI</td>
+                                    <td class="py-3 px-4"><span class="bg-red-100 text-red-800 text-[10px] px-1.5 py-0.5 rounded font-bold">DEBE FICHA</span></td>
+                                    <td class="py-3 px-4">Biopsia (150101)</td>
+                                    <td class="py-3 px-4 text-right font-mono">$11,275.00</td>
+                                    <td class="py-3 px-4 text-center"><span class="bg-red-100 text-red-800 px-2 py-0.5 rounded font-semibold">Tramitación Detenida por Falta de Ficha Médica</span></td>
+                                </tr>
+                                <tr class="hover:bg-amber-50/40">
+                                    <td class="py-3 px-4 font-mono font-medium">26C-000061</td>
+                                    <td class="py-3 px-4">28/05/2026</td>
+                                    <td class="py-3 px-4 font-bold text-slate-800">CORTEZ MIRIAM EDITH</td>
+                                    <td class="py-3 px-4">DOSEP WEB</td>
+                                    <td class="py-3 px-4">Biopsia</td>
+                                    <td class="py-3 px-4 text-right font-mono text-slate-400">$0.00</td>
+                                    <td class="py-3 px-4 text-center"><span class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-semibold">Carga Incompleta en ERP (Falta Nomenclador y Honorario)</span></td>
+                                </tr>
+                                <tr class="hover:bg-amber-50/40">
+                                    <td class="py-3 px-4 font-mono font-medium">26H-000451</td>
+                                    <td class="py-3 px-4">28/05/2026</td>
+                                    <td class="py-3 px-4 font-bold text-slate-800">TORRES IVANA LORENA</td>
+                                    <td class="py-3 px-4">DOSEP WEB</td>
+                                    <td class="py-3 px-4">Biopsia</td>
+                                    <td class="py-3 px-4 text-right font-mono text-slate-400">$0.00</td>
+                                    <td class="py-3 px-4 text-center"><span class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-semibold">Carga Incompleta en ERP (Falta Nomenclador y Honorario)</span></td>
+                                </tr>
+                                <tr class="hover:bg-amber-50/40">
+                                    <td class="py-3 px-4 font-mono font-medium">26H-000770</td>
+                                    <td class="py-3 px-4">18/06/2026</td>
+                                    <td class="py-3 px-4 font-bold text-slate-800">MUÑOS JOSE EDUARDO</td>
+                                    <td class="py-3 px-4">DOSEP WEB</td>
+                                    <td class="py-3 px-4">Biopsia</td>
+                                    <td class="py-3 px-4 text-right font-mono text-slate-400">$0.00</td>
+                                    <td class="py-3 px-4 text-center"><span class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-semibold">Carga Incompleta en ERP (Falta Nomenclador y Honorario)</span></td>
+                                </tr>
+                                <tr class="hover:bg-amber-50/40">
+                                    <td class="py-3 px-4 font-mono font-medium">26H-000771</td>
+                                    <td class="py-3 px-4">18/06/2026</td>
+                                    <td class="py-3 px-4 font-bold text-slate-800">AGUILAR ELVIRA SILVIA</td>
+                                    <td class="py-3 px-4">DOSEP WEB</td>
+                                    <td class="py-3 px-4">Biopsia</td>
+                                    <td class="py-3 px-4 text-right font-mono text-slate-400">$0.00</td>
+                                    <td class="py-3 px-4 text-center"><span class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-semibold">Carga Incompleta en ERP (Falta Nomenclador y Honorario)</span></td>
+                                </tr>
+                                <tr class="hover:bg-amber-50/40">
+                                    <td class="py-3 px-4 font-mono font-medium">26H-000810</td>
+                                    <td class="py-3 px-4">25/06/2026</td>
+                                    <td class="py-3 px-4 font-bold text-slate-800">FIERRO RICARDO DANIEL</td>
+                                    <td class="py-3 px-4">DOSEP WEB</td>
+                                    <td class="py-3 px-4">Biopsia</td>
+                                    <td class="py-3 px-4 text-right font-mono text-slate-400">$0.00</td>
+                                    <td class="py-3 px-4 text-center"><span class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-semibold">Carga Incompleta en ERP (Falta Nomenclador y Honorario)</span></td>
+                                </tr>
+                                <tr class="hover:bg-amber-50/40">
+                                    <td class="py-3 px-4 font-mono font-medium">26H-000719</td>
+                                    <td class="py-3 px-4">11/06/2026</td>
+                                    <td class="py-3 px-4 font-bold text-slate-800">PANSA SERGIO HORACIO</td>
+                                    <td class="py-3 px-4">DOSPU</td>
+                                    <td class="py-3 px-4">Biopsia (150101)</td>
+                                    <td class="py-3 px-4 text-right font-mono">$11,275.00</td>
+                                    <td class="py-3 px-4 text-center"><span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">Pendiente de Liquidación por Sanatorio</span></td>
+                                </tr>
+                                <tr class="hover:bg-amber-50/40">
+                                    <td class="py-3 px-4 font-mono font-medium">26H-000720</td>
+                                    <td class="py-3 px-4">11/06/2026</td>
+                                    <td class="py-3 px-4 font-bold text-slate-800">GIULIANI FRANCO RAUL</td>
+                                    <td class="py-3 px-4">DOSPU</td>
+                                    <td class="py-3 px-4">Biopsia (150101)</td>
+                                    <td class="py-3 px-4 text-right font-mono">$11,275.00</td>
+                                    <td class="py-3 px-4 text-center"><span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">Pendiente de Liquidación por Sanatorio</span></td>
+                                </tr>
+                                <tr class="hover:bg-amber-50/40">
+                                    <td class="py-3 px-4 font-mono font-medium">26H-000622</td>
+                                    <td class="py-3 px-4">26/05/2026</td>
+                                    <td class="py-3 px-4 font-bold text-slate-800">ALTURRIA CRISTIAN DANIEL</td>
+                                    <td class="py-3 px-4">JERARQUICOS SALUD</td>
+                                    <td class="py-3 px-4">Biopsia (150101)</td>
+                                    <td class="py-3 px-4 text-right font-mono">$11,275.00</td>
+                                    <td class="py-3 px-4 text-center"><span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">Pendiente de Liquidación por Sanatorio</span></td>
+                                </tr>
+                                <tr class="hover:bg-amber-50/40">
+                                    <td class="py-3 px-4 font-mono font-medium">26H-000651</td>
+                                    <td class="py-3 px-4">28/05/2026</td>
+                                    <td class="py-3 px-4 font-bold text-slate-800">HORNUNG EDUARDO</td>
+                                    <td class="py-3 px-4">JERARQUICOS SALUD</td>
+                                    <td class="py-3 px-4">Biopsia (150101)</td>
+                                    <td class="py-3 px-4 text-right font-mono">$22,550.00</td>
+                                    <td class="py-3 px-4 text-center"><span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">Pendiente de Liquidación por Sanatorio</span></td>
+                                </tr>
+                                <tr class="hover:bg-amber-50/40">
+                                    <td class="py-3 px-4 font-mono font-medium">26H-000599</td>
+                                    <td class="py-3 px-4">14/05/2026</td>
+                                    <td class="py-3 px-4 font-bold text-slate-800">PRANZONI AGUSTINA L.</td>
+                                    <td class="py-3 px-4">PREVENCION SALUD</td>
+                                    <td class="py-3 px-4">Biopsia (150101)</td>
+                                    <td class="py-3 px-4 text-right font-mono">$11,275.00</td>
+                                    <td class="py-3 px-4 text-center"><span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">Pendiente de Liquidación por Sanatorio</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 2: MATCHEADAS -->
+                <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+                    <button onclick="toggleAccordion('acc-matched', 'icon-matched')" class="w-full px-6 py-4 bg-slate-50 hover:bg-slate-100 border-b border-slate-200 flex flex-wrap justify-between items-center text-left transition cursor-pointer select-none">
+                        <div class="flex items-center gap-3">
+                            <i id="icon-matched" class="fa-solid fa-chevron-down text-slate-600 transition-transform duration-200"></i>
+                            <div>
+                                <h3 class="font-bold text-slate-800 text-base">
+                                    2. Listado de Conciliaciones Exitosas (63 Prestaciones Matcheadas)
+                                </h3>
+                                <p class="text-xs text-slate-500 mt-0.5">Cruces exactos entre registros del ERP (Mayo-Junio) y Liquidaciones Cobradas en Agosto</p>
+                            </div>
+                        </div>
+                        <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">63 Casos Confirmados</span>
+                    </button>
+
+                    <div id="acc-matched" class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-slate-600">
+                            <thead class="text-xs uppercase bg-slate-100 text-slate-700 border-b border-slate-200">
+                                <tr>
+                                    <th class="py-3 px-3">Protocolo</th>
+                                    <th class="py-3 px-3">Fecha ERP</th>
+                                    <th class="py-3 px-3">Paciente</th>
+                                    <th class="py-3 px-3">Obra Social</th>
+                                    <th class="py-3 px-3">Estudio (Código)</th>
+                                    <th class="py-3 px-3 text-right">Valor ERP</th>
+                                    <th class="py-3 px-3">Liquidación</th>
+                                    <th class="py-3 px-3 text-right">Cobrado Real</th>
+                                    <th class="py-3 px-3 text-center">Observaciones</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-200 text-[11px]">
+                                <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000347</td><td class="py-2 px-3">06/05/2026</td><td class="py-2 px-3 font-bold">FIERRO RICARDO DANIEL</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$58,414.02</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
+                                <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000538</td><td class="py-2 px-3">07/05/2026</td><td class="py-2 px-3 font-bold">GONZALEZ NORMA DE LOURDES</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$58,414.02</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
+                                <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000540</td><td class="py-2 px-3">07/05/2026</td><td class="py-2 px-3 font-bold">OROZCO RAMON OSCAR</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$58,414.02</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
+                                <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000569</td><td class="py-2 px-3">07/05/2026</td><td class="py-2 px-3 font-bold">SOSA CECILIA DANIELA</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Biopsia x2 (150101)</td><td class="py-2 px-3 text-right font-mono">$22,550.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$116,828.05</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
+                                <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000570</td><td class="py-2 px-3">07/05/2026</td><td class="py-2 px-3 font-bold">MEDINA MARCELA</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$58,414.02</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
+                                <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26C-000046</td><td class="py-2 px-3">28/05/2026</td><td class="py-2 px-3 font-bold">SOSA MONICA ALEJANDRA</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Asistencia Punc. (150114)</td><td class="py-2 px-3 text-right font-mono text-slate-400">$0.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$161,592.38</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Matcheado (Carga ERP en $0)</span></td></tr>
+                                <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000561</td><td class="py-2 px-3">07/05/2026</td><td class="py-2 px-3 font-bold">BAROSO MARIA JOSEFINA LUCIA</td><td class="py-2 px-3">OSDE</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26933</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$55,707.17</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
+                                <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000564</td><td class="py-2 px-3">07/05/2026</td><td class="py-2 px-3 font-bold">HERMAN ERICH</td><td class="py-2 px-3">OMINT</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-27355</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$61,462.69</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        <!-- Tablas Desplegables de Matching (Acordeón) -->
-        <div class="space-y-6 mb-12">
+        <!-- ================================================================= -->
+        <!-- PESTAÑA 2: PROPUESTA COMERCIAL FORMAL -->
+        <!-- ================================================================= -->
+        <div id="tab-propuesta" class="tab-content hidden">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 max-w-5xl mx-auto">
+                <div class="border-b border-slate-200 pb-6 mb-6 flex flex-wrap justify-between items-center gap-4">
+                    <div>
+                        <span class="bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full uppercase">Documento Oficial</span>
+                        <h2 class="text-2xl font-bold text-slate-900 mt-2">Propuesta de Servicio Comercial — Lógica</h2>
+                        <p class="text-sm text-slate-500">Acompañamiento Integral en Procesos, Sistemas y Finanzas</p>
+                    </div>
+                    <div class="text-right text-xs text-slate-500">
+                        <p class="font-bold text-slate-800">Fecha: Septiembre 2026</p>
+                        <p>Atención: Dra. Risma María Valentina</p>
+                    </div>
+                </div>
 
-            <!-- SECCIÓN 1: NO MATCHEADAS -->
-            <div class="bg-white rounded-2xl shadow-sm border border-amber-300 overflow-hidden">
-                <button onclick="toggleAccordion('acc-no-matched', 'icon-no-matched')" class="w-full px-6 py-4 bg-amber-50 hover:bg-amber-100/80 border-b border-amber-200 flex flex-wrap justify-between items-center text-left transition cursor-pointer select-none">
-                    <div class="flex items-center gap-3">
-                        <i id="icon-no-matched" class="fa-solid fa-chevron-down text-amber-700 transition-transform duration-200"></i>
-                        <div>
-                            <h3 class="font-bold text-amber-900 text-base flex items-center gap-2">
-                                <i class="fa-solid fa-triangle-exclamation text-amber-600"></i>
-                                1. Prestaciones ERP No Matcheadas / Observadas (11 Casos)
-                            </h3>
-                            <p class="text-xs text-amber-800 mt-0.5">Registradas en el ERP de la profesional pero NO liquidadas ni canceladas en el Hospital Privado de la Villa</p>
+                <div class="space-y-6 text-sm text-slate-700 leading-relaxed">
+                    <div>
+                        <h3 class="text-base font-bold text-slate-900 mb-2">1. Diagnóstico Inicial & Propósito del Servicio</h3>
+                        <p>A partir del relevamiento efectuado sobre la producción registrada en su ERP propio y las liquidaciones cobradas del Hospital Privado de la Villa, hemos detectado oportunidades clave para sanear la información, corregir descalces impositivos y automatizar la gestión administrativa. El propósito de Lógica es construir un esquema transparente que le permita desentenderse de la carga administrativa diaria, garantizando que cada prestación realizada sea cobrada y que su liquidez se optimice.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-6">
+                        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200">
+                            <h4 class="font-bold text-blue-900 text-sm mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-database text-blue-600"></i> Fase 1: ERP como Fuente de Verdad
+                            </h4>
+                            <p class="text-xs text-slate-600">Mapeo integral de toda la producción del año 2026 en su ERP. Parametrización y carga de aranceles/nomencladores reales. Habilitación de marcas de cancelación manual/automática y filtros de prestaciones pendientes vs canceladas.</p>
+                        </div>
+                        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200">
+                            <h4 class="font-bold text-indigo-900 text-sm mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-bullhorn text-indigo-600"></i> Fase 2: Gestión de Reclamos & Circuito
+                            </h4>
+                            <p class="text-xs text-slate-600">Mapeo de plantillas de liquidación de todos sus clientes. Diseño de un plan de reclamos formales para prestaciones no liquidadas o trabadas por documentación. Implementación de una rutina administrativa mensualizada.</p>
+                        </div>
+                        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200">
+                            <h4 class="font-bold text-purple-900 text-sm mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-receipt text-purple-600"></i> Fase 3: Fiscalidad, Compras & Contador
+                            </h4>
+                            <p class="text-xs text-slate-600">Visibilidad de retenciones impositivas sufatidas (IIBB, Ganancias) como Responsable Inscripta. Integración activa con su estudio contable. Desarrollo propio de recepción de facturas de proveedores por Email para cargar compras automáticamente.</p>
+                        </div>
+                        <div class="p-5 bg-slate-50 rounded-2xl border border-slate-200">
+                            <h4 class="font-bold text-emerald-900 text-sm mb-2 flex items-center gap-2">
+                                <i class="fa-solid fa-chart-line text-emerald-600"></i> Fase 4: Cashflow & Plan Inversor
+                            </h4>
+                            <p class="text-xs text-slate-600">Cashflow dinámico a 90 días considerando plazos reales de cobro por obra social y egresos. Establecimiento de un retiro fijo para la profesional. Colocación de excedentes en planes de inversión con asesores financieros.</p>
                         </div>
                     </div>
-                    <span class="bg-amber-200 text-amber-900 text-xs font-bold px-3 py-1 rounded-full">Desplegar / Ocultar Detalle</span>
-                </button>
 
-                <div id="acc-no-matched" class="overflow-x-auto">
-                    <table class="w-full text-sm text-left text-slate-600">
-                        <thead class="text-xs uppercase bg-amber-100/60 text-slate-700 border-b border-amber-200">
-                            <tr>
-                                <th class="py-3 px-4">Protocolo</th>
-                                <th class="py-3 px-4">Fecha ERP</th>
-                                <th class="py-3 px-4">Paciente</th>
-                                <th class="py-3 px-4">Obra Social</th>
-                                <th class="py-3 px-4">Estudio</th>
-                                <th class="py-3 px-4 text-right">Monto ERP</th>
-                                <th class="py-3 px-4 text-center">Motivo de Inconsistencia / Observación</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-200 text-xs">
-                            <tr class="hover:bg-amber-50/40">
-                                <td class="py-3 px-4 font-mono font-medium">26H-000633</td>
-                                <td class="py-3 px-4">26/05/2026</td>
-                                <td class="py-3 px-4 font-bold text-slate-800">CRUSEÑO TERESA NOEMI</td>
-                                <td class="py-3 px-4"><span class="bg-red-100 text-red-800 text-[10px] px-1.5 py-0.5 rounded font-bold">DEBE FICHA</span></td>
-                                <td class="py-3 px-4">Biopsia (150101)</td>
-                                <td class="py-3 px-4 text-right font-mono">$11,275.00</td>
-                                <td class="py-3 px-4 text-center"><span class="bg-red-100 text-red-800 px-2 py-0.5 rounded font-semibold">Tramitación Detenida por Falta de Ficha Médica</span></td>
-                            </tr>
-                            <tr class="hover:bg-amber-50/40">
-                                <td class="py-3 px-4 font-mono font-medium">26C-000061</td>
-                                <td class="py-3 px-4">28/05/2026</td>
-                                <td class="py-3 px-4 font-bold text-slate-800">CORTEZ MIRIAM EDITH</td>
-                                <td class="py-3 px-4">DOSEP WEB</td>
-                                <td class="py-3 px-4">Biopsia</td>
-                                <td class="py-3 px-4 text-right font-mono text-slate-400">$0.00</td>
-                                <td class="py-3 px-4 text-center"><span class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-semibold">Carga Incompleta en ERP (Falta Nomenclador y Honorario)</span></td>
-                            </tr>
-                            <tr class="hover:bg-amber-50/40">
-                                <td class="py-3 px-4 font-mono font-medium">26H-000451</td>
-                                <td class="py-3 px-4">28/05/2026</td>
-                                <td class="py-3 px-4 font-bold text-slate-800">TORRES IVANA LORENA</td>
-                                <td class="py-3 px-4">DOSEP WEB</td>
-                                <td class="py-3 px-4">Biopsia</td>
-                                <td class="py-3 px-4 text-right font-mono text-slate-400">$0.00</td>
-                                <td class="py-3 px-4 text-center"><span class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-semibold">Carga Incompleta en ERP (Falta Nomenclador y Honorario)</span></td>
-                            </tr>
-                            <tr class="hover:bg-amber-50/40">
-                                <td class="py-3 px-4 font-mono font-medium">26H-000770</td>
-                                <td class="py-3 px-4">18/06/2026</td>
-                                <td class="py-3 px-4 font-bold text-slate-800">MUÑOS JOSE EDUARDO</td>
-                                <td class="py-3 px-4">DOSEP WEB</td>
-                                <td class="py-3 px-4">Biopsia</td>
-                                <td class="py-3 px-4 text-right font-mono text-slate-400">$0.00</td>
-                                <td class="py-3 px-4 text-center"><span class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-semibold">Carga Incompleta en ERP (Falta Nomenclador y Honorario)</span></td>
-                            </tr>
-                            <tr class="hover:bg-amber-50/40">
-                                <td class="py-3 px-4 font-mono font-medium">26H-000771</td>
-                                <td class="py-3 px-4">18/06/2026</td>
-                                <td class="py-3 px-4 font-bold text-slate-800">AGUILAR ELVIRA SILVIA</td>
-                                <td class="py-3 px-4">DOSEP WEB</td>
-                                <td class="py-3 px-4">Biopsia</td>
-                                <td class="py-3 px-4 text-right font-mono text-slate-400">$0.00</td>
-                                <td class="py-3 px-4 text-center"><span class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-semibold">Carga Incompleta en ERP (Falta Nomenclador y Honorario)</span></td>
-                            </tr>
-                            <tr class="hover:bg-amber-50/40">
-                                <td class="py-3 px-4 font-mono font-medium">26H-000810</td>
-                                <td class="py-3 px-4">25/06/2026</td>
-                                <td class="py-3 px-4 font-bold text-slate-800">FIERRO RICARDO DANIEL</td>
-                                <td class="py-3 px-4">DOSEP WEB</td>
-                                <td class="py-3 px-4">Biopsia</td>
-                                <td class="py-3 px-4 text-right font-mono text-slate-400">$0.00</td>
-                                <td class="py-3 px-4 text-center"><span class="bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-semibold">Carga Incompleta en ERP (Falta Nomenclador y Honorario)</span></td>
-                            </tr>
-                            <tr class="hover:bg-amber-50/40">
-                                <td class="py-3 px-4 font-mono font-medium">26H-000719</td>
-                                <td class="py-3 px-4">11/06/2026</td>
-                                <td class="py-3 px-4 font-bold text-slate-800">PANSA SERGIO HORACIO</td>
-                                <td class="py-3 px-4">DOSPU</td>
-                                <td class="py-3 px-4">Biopsia (150101)</td>
-                                <td class="py-3 px-4 text-right font-mono">$11,275.00</td>
-                                <td class="py-3 px-4 text-center"><span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">Pendiente de Liquidación por Sanatorio</span></td>
-                            </tr>
-                            <tr class="hover:bg-amber-50/40">
-                                <td class="py-3 px-4 font-mono font-medium">26H-000720</td>
-                                <td class="py-3 px-4">11/06/2026</td>
-                                <td class="py-3 px-4 font-bold text-slate-800">GIULIANI FRANCO RAUL</td>
-                                <td class="py-3 px-4">DOSPU</td>
-                                <td class="py-3 px-4">Biopsia (150101)</td>
-                                <td class="py-3 px-4 text-right font-mono">$11,275.00</td>
-                                <td class="py-3 px-4 text-center"><span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">Pendiente de Liquidación por Sanatorio</span></td>
-                            </tr>
-                            <tr class="hover:bg-amber-50/40">
-                                <td class="py-3 px-4 font-mono font-medium">26H-000622</td>
-                                <td class="py-3 px-4">26/05/2026</td>
-                                <td class="py-3 px-4 font-bold text-slate-800">ALTURRIA CRISTIAN DANIEL</td>
-                                <td class="py-3 px-4">JERARQUICOS SALUD</td>
-                                <td class="py-3 px-4">Biopsia (150101)</td>
-                                <td class="py-3 px-4 text-right font-mono">$11,275.00</td>
-                                <td class="py-3 px-4 text-center"><span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">Pendiente de Liquidación por Sanatorio</span></td>
-                            </tr>
-                            <tr class="hover:bg-amber-50/40">
-                                <td class="py-3 px-4 font-mono font-medium">26H-000651</td>
-                                <td class="py-3 px-4">28/05/2026</td>
-                                <td class="py-3 px-4 font-bold text-slate-800">HORNUNG EDUARDO</td>
-                                <td class="py-3 px-4">JERARQUICOS SALUD</td>
-                                <td class="py-3 px-4">Biopsia (150101)</td>
-                                <td class="py-3 px-4 text-right font-mono">$22,550.00</td>
-                                <td class="py-3 px-4 text-center"><span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">Pendiente de Liquidación por Sanatorio</span></td>
-                            </tr>
-                            <tr class="hover:bg-amber-50/40">
-                                <td class="py-3 px-4 font-mono font-medium">26H-000599</td>
-                                <td class="py-3 px-4">14/05/2026</td>
-                                <td class="py-3 px-4 font-bold text-slate-800">PRANZONI AGUSTINA L.</td>
-                                <td class="py-3 px-4">PREVENCION SALUD</td>
-                                <td class="py-3 px-4">Biopsia (150101)</td>
-                                <td class="py-3 px-4 text-right font-mono">$11,275.00</td>
-                                <td class="py-3 px-4 text-center"><span class="bg-amber-100 text-amber-800 px-2 py-0.5 rounded font-semibold">Pendiente de Liquidación por Sanatorio</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- SECCIÓN 2: TODAS LAS PRESTACIONES MATCHEADAS -->
-            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
-                <button onclick="toggleAccordion('acc-matched', 'icon-matched')" class="w-full px-6 py-4 bg-slate-50 hover:bg-slate-100 border-b border-slate-200 flex flex-wrap justify-between items-center text-left transition cursor-pointer select-none">
-                    <div class="flex items-center gap-3">
-                        <i id="icon-matched" class="fa-solid fa-chevron-down text-slate-600 transition-transform duration-200"></i>
-                        <div>
-                            <h3 class="font-bold text-slate-800 text-base">
-                                2. Listado de Conciliaciones Exitosas (63 Prestaciones Matcheadas)
-                            </h3>
-                            <p class="text-xs text-slate-500 mt-0.5">Cruces exactos entre registros del ERP (Mayo-Junio) y Liquidaciones Cobradas en Agosto</p>
-                        </div>
+                    <div>
+                        <h3 class="text-base font-bold text-slate-900 mb-2">2. Compromiso Operativo</h3>
+                        <p>Lógica asumirá la representación administrativa frente a instituciones, estudio contable y asesores financieros, realizando las gestiones necesarias para consolidar la información y entregar reportes periódicos de control.</p>
                     </div>
-                    <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">63 Casos Confirmados</span>
-                </button>
-
-                <div id="acc-matched" class="overflow-x-auto">
-                    <table class="w-full text-sm text-left text-slate-600">
-                        <thead class="text-xs uppercase bg-slate-100 text-slate-700 border-b border-slate-200">
-                            <tr>
-                                <th class="py-3 px-3">Protocolo</th>
-                                <th class="py-3 px-3">Fecha ERP</th>
-                                <th class="py-3 px-3">Paciente</th>
-                                <th class="py-3 px-3">Obra Social</th>
-                                <th class="py-3 px-3">Estudio (Código)</th>
-                                <th class="py-3 px-3 text-right">Valor ERP</th>
-                                <th class="py-3 px-3">Liquidación</th>
-                                <th class="py-3 px-3 text-right">Cobrado Real</th>
-                                <th class="py-3 px-3 text-center">Observaciones</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-slate-200 text-[11px]">
-                            <!-- DOSEP -->
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000347</td><td class="py-2 px-3">06/05/2026</td><td class="py-2 px-3 font-bold">FIERRO RICARDO DANIEL</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$58,414.02</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000538</td><td class="py-2 px-3">07/05/2026</td><td class="py-2 px-3 font-bold">GONZALEZ NORMA DE LOURDES</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$58,414.02</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000540</td><td class="py-2 px-3">07/05/2026</td><td class="py-2 px-3 font-bold">OROZCO RAMON OSCAR</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$58,414.02</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000569</td><td class="py-2 px-3">07/05/2026</td><td class="py-2 px-3 font-bold">SOSA CECILIA DANIELA</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Biopsia x2 (150101)</td><td class="py-2 px-3 text-right font-mono">$22,550.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$116,828.05</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000570</td><td class="py-2 px-3">07/05/2026</td><td class="py-2 px-3 font-bold">MEDINA MARCELA</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$58,414.02</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000596</td><td class="py-2 px-3">14/05/2026</td><td class="py-2 px-3 font-bold">ESCOBAR SUSANA BEATRIZ</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$58,414.02</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000598</td><td class="py-2 px-3">14/05/2026</td><td class="py-2 px-3 font-bold">AIMAR CANDELA ALITA</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$58,414.02</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000601</td><td class="py-2 px-3">14/05/2026</td><td class="py-2 px-3 font-bold">MOLEKER RODOLFO ALBERTO</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$58,414.02</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000602</td><td class="py-2 px-3">14/05/2026</td><td class="py-2 px-3 font-bold">TORRES SANTIAGO JUAN</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$58,414.02</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000603</td><td class="py-2 px-3">14/05/2026</td><td class="py-2 px-3 font-bold">DI PANE BERTOMEU ROSARIO</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$58,414.02</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000604</td><td class="py-2 px-3">14/05/2026</td><td class="py-2 px-3 font-bold">GODOY VERONICA VALERIA</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$58,414.02</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000631</td><td class="py-2 px-3">26/05/2026</td><td class="py-2 px-3 font-bold">LUCERO MATIAS JESUS</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Biopsia x3 (150101)</td><td class="py-2 px-3 text-right font-mono">$33,825.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$175,242.07</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000632</td><td class="py-2 px-3">26/05/2026</td><td class="py-2 px-3 font-bold">DOMINGUEZ MARCELA</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$58,414.02</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000634</td><td class="py-2 px-3">26/05/2026</td><td class="py-2 px-3 font-bold">ALANIZ FABIANA DEL CARMEN</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$58,414.02</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000635</td><td class="py-2 px-3">26/05/2026</td><td class="py-2 px-3 font-bold">MINCHILLI MARIA CRISTINA</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$58,414.02</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000636</td><td class="py-2 px-3">26/05/2026</td><td class="py-2 px-3 font-bold">LUCERO MARIA DEL CARMEN</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Biopsia x2 (150101)</td><td class="py-2 px-3 text-right font-mono">$22,550.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$116,828.05</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000637</td><td class="py-2 px-3">26/05/2026</td><td class="py-2 px-3 font-bold">CAPPI GISELA JUDITH</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$58,414.02</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000641</td><td class="py-2 px-3">26/05/2026</td><td class="py-2 px-3 font-bold">BERGALLO LUCERO LEYLA</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$58,414.02</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26C-000046</td><td class="py-2 px-3">28/05/2026</td><td class="py-2 px-3 font-bold">SOSA MONICA ALEJANDRA</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Asistencia Punc. (150114)</td><td class="py-2 px-3 text-right font-mono text-slate-400">$0.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$161,592.38</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Matcheado (Carga ERP en $0)</span></td></tr>
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26C-000062</td><td class="py-2 px-3">28/05/2026</td><td class="py-2 px-3 font-bold">CASALE SERGIO JUAN</td><td class="py-2 px-3">DOSEP WEB</td><td class="py-2 px-3">Biopsia x3 (150101)</td><td class="py-2 px-3 text-right font-mono">$45,100.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26983</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$175,242.07</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-
-                            <!-- OSDE -->
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000561</td><td class="py-2 px-3">07/05/2026</td><td class="py-2 px-3 font-bold">BAROSO MARIA JOSEFINA LUCIA</td><td class="py-2 px-3">OSDE</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26933</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$55,707.17</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000627</td><td class="py-2 px-3">26/05/2026</td><td class="py-2 px-3 font-bold">TRAVAGLIA DOMINGO ALBERTO</td><td class="py-2 px-3">OSDE</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26933</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$55,707.17</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000653</td><td class="py-2 px-3">28/05/2026</td><td class="py-2 px-3 font-bold">CALDERON GERMAN ALBERTO</td><td class="py-2 px-3">OSDE</td><td class="py-2 px-3">Biopsia x2 (150101)</td><td class="py-2 px-3 text-right font-mono">$22,550.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26933</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$277,443.54</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000687</td><td class="py-2 px-3">04/06/2026</td><td class="py-2 px-3 font-bold">ABBA OSCAR ADOLFO</td><td class="py-2 px-3">OSDE</td><td class="py-2 px-3">Biopsia x2 (150101)</td><td class="py-2 px-3 text-right font-mono">$22,550.00</td><td class="py-2 px-3 font-mono text-blue-600">L-26933</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$55,707.17</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-
-                            <!-- OMINT -->
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000564</td><td class="py-2 px-3">07/05/2026</td><td class="py-2 px-3 font-bold">HERMAN ERICH</td><td class="py-2 px-3">OMINT</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-27355</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$61,462.69</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000566</td><td class="py-2 px-3">07/05/2026</td><td class="py-2 px-3 font-bold">CARRIZO COLLADO AYELEN</td><td class="py-2 px-3">OMINT</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-27355</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$61,462.69</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-
-                            <!-- SWISS MEDICAL -->
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000563</td><td class="py-2 px-3">07/05/2026</td><td class="py-2 px-3 font-bold">GIL FRANCISCO DAVID</td><td class="py-2 px-3">SWISS MEDICAL</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-27177</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$62,462.42</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-
-                            <!-- OPDEA -->
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000803</td><td class="py-2 px-3">25/06/2026</td><td class="py-2 px-3 font-bold">PEREZ MAXIMO</td><td class="py-2 px-3">OPDEA</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-27491</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$61,611.26</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-
-                            <!-- MEDISALUD -->
-                            <tr class="hover:bg-slate-50"><td class="py-2 px-3 font-mono">26H-000638</td><td class="py-2 px-3">26/05/2026</td><td class="py-2 px-3 font-bold">BERGARA BRUNO EMANUEL</td><td class="py-2 px-3">MEDISALUD</td><td class="py-2 px-3">Biopsia (150101)</td><td class="py-2 px-3 text-right font-mono">$11,275.00</td><td class="py-2 px-3 font-mono text-blue-600">L-27302</td><td class="py-2 px-3 text-right font-bold text-emerald-600">$53,971.68</td><td class="py-2 px-3 text-center"><span class="bg-emerald-100 text-emerald-800 px-1.5 py-0.5 rounded">Conciliado</span></td></tr>
-                        </tbody>
-                    </table>
                 </div>
             </div>
-
         </div>
 
-        <!-- PLAN DE TRABAJO ESTRATÉGICO PROPUESTO POR LÓGICA -->
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
-            <div class="border-b border-slate-200 pb-4 mb-6 flex flex-wrap justify-between items-center gap-2">
-                <div>
-                    <span class="text-xs font-bold uppercase tracking-wider text-blue-600">Servicio de Acompañamiento Empresarial</span>
-                    <h3 class="text-xl font-bold text-slate-900 mt-1">Plan de Trabajo Integral Propuesto por Lógica</h3>
-                </div>
-                <span class="bg-blue-50 text-blue-700 font-semibold text-xs px-3 py-1 rounded-lg border border-blue-200">Alcance de Gestión 2026</span>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Fase 1 -->
-                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 flex flex-col justify-between">
+        <!-- ================================================================= -->
+        <!-- PESTAÑA 3: ROADMAP DE LAS PRIMERAS 2 SEMANAS -->
+        <!-- ================================================================= -->
+        <div id="tab-roadmap" class="tab-content hidden">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8 max-w-5xl mx-auto">
+                <div class="border-b border-slate-200 pb-6 mb-6 flex flex-wrap justify-between items-center gap-4">
                     <div>
-                        <div class="w-8 h-8 bg-blue-600 text-white font-bold rounded-lg flex items-center justify-center mb-3">1</div>
-                        <h4 class="font-bold text-slate-800 text-base mb-2">ERP como Fuente de Verdad</h4>
-                        <ul class="text-xs text-slate-600 space-y-2">
-                            <li>• Mapeo general de la producción del año 2026.</li>
-                            <li>• Parametrización y carga de valores/nomencladores reales.</li>
-                            <li>• Habilitación de marcas manuales/automáticas para cancelar prestaciones sin facturar.</li>
-                            <li>• Filtros de prestaciones pendientes vs. canceladas.</li>
-                        </ul>
+                        <span class="bg-purple-100 text-purple-800 text-xs font-bold px-3 py-1 rounded-full uppercase">Plan de Despliegue Rápido</span>
+                        <h2 class="text-2xl font-bold text-slate-900 mt-2">Roadmap de Trabajo — Primeras 2 Semanas</h2>
+                        <p class="text-sm text-slate-500">Cronograma táctico de inicio de operaciones e integración administrativa</p>
                     </div>
+                    <span class="bg-slate-100 text-slate-700 font-mono text-xs px-3 py-1 rounded-lg">Días 1 al 14</span>
                 </div>
 
-                <!-- Fase 2 -->
-                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 flex flex-col justify-between">
+                <div class="space-y-6">
+                    
+                    <!-- SEMANA 1 -->
                     <div>
-                        <div class="w-8 h-8 bg-indigo-600 text-white font-bold rounded-lg flex items-center justify-center mb-3">2</div>
-                        <h4 class="font-bold text-slate-800 text-base mb-2">Gestión de Reclamos & Rutina</h4>
-                        <ul class="text-xs text-slate-600 space-y-2">
-                            <li>• Mapeo de formatos de liquidación de todos los clientes.</li>
-                            <li>• Plan de reclamos formales para prestaciones no liquidadas.</li>
-                            <li>• Establecimiento de un flujo de trabajo administrativo mensualizado.</li>
-                        </ul>
+                        <h3 class="text-base font-bold text-blue-900 mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-calendar-week text-blue-600"></i> Semana 1: Relevamiento, Accesos & Saneamiento ERP
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                                <span class="font-bold text-blue-700">Día 1 - 2: Onboarding & Accesos</span>
+                                <p class="text-slate-600 mt-1">Obtención de credenciales de ERP, plataformas de sanatorios y contacto con área administrativa. Entrega de plantilla para unificar facturas de compras.</p>
+                            </div>
+                            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                                <span class="font-bold text-blue-700">Día 3 - 4: Auditoría Producción 2026</span>
+                                <p class="text-slate-600 mt-1">Descarga completa del ERP del año 2026. Identificación masiva de registros en `$0`, faltas de nomenclador y casos con etiqueta "DEBE FICHA".</p>
+                            </div>
+                            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200 md:col-span-2">
+                                <span class="font-bold text-blue-700">Día 5: Parametrización Tarifaria</span>
+                                <p class="text-slate-600 mt-1">Carga de aranceles/nomencladores vigentes por obra social en el ERP para corregir valores nominales subestimados.</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Fase 3 -->
-                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="w-8 h-8 bg-purple-600 text-white font-bold rounded-lg flex items-center justify-center mb-3">3</div>
-                        <h4 class="font-bold text-slate-800 text-base mb-2">Fiscalidad, Compras & Contador</h4>
-                        <ul class="text-xs text-slate-600 space-y-2">
-                            <li>• Visualización de retenciones e impuestos (RI).</li>
-                            <li>• Mesa de trabajo e integración con el estudio contable.</li>
-                            <li>• Sistema propio de recepción de facturas de gastos vía Email para el módulo de compras.</li>
-                        </ul>
+                    <!-- SEMANA 2 -->
+                    <div class="pt-4 border-t border-slate-200">
+                        <h3 class="text-base font-bold text-purple-900 mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-calendar-check text-purple-600"></i> Semana 2: Integración Contable, Reclamos & Módulo Compras
+                        </h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                                <span class="font-bold text-purple-700">Día 6 - 7: Mesa de Trabajo Contable</span>
+                                <p class="text-slate-600 mt-1">Entrevista con el contador de la profesional. Alineación de requerimientos de retenciones impositivas, IVA/Ganancias y flujo de información automática.</p>
+                            </div>
+                            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                                <span class="font-bold text-purple-700">Día 8 - 9: Primer Plan de Reclamos</span>
+                                <p class="text-slate-600 mt-1">Generación y envío del primer lote formal de reclamos a sanatorios por prestaciones pendientes de liquidar (Mayo/Junio y retenidas por fichas).</p>
+                            </div>
+                            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                                <span class="font-bold text-purple-700">Día 10 - 12: Implementación Módulo Compras</span>
+                                <p class="text-slate-600 mt-1">Configuración del canal vía Email para que todas las facturas de gastos se procesen y carguen automáticamente en el sistema de compras.</p>
+                            </div>
+                            <div class="p-4 bg-slate-50 rounded-xl border border-slate-200">
+                                <span class="font-bold text-purple-700">Día 13 - 14: Cierre & Presentación Cashflow V1</span>
+                                <p class="text-slate-600 mt-1">Presentación del primer informe de estado saneado, matriz de prestaciones pendientes y proyección inicial de Cashflow a 90 días.</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Fase 4 -->
-                <div class="bg-slate-50 p-5 rounded-2xl border border-slate-200 flex flex-col justify-between">
-                    <div>
-                        <div class="w-8 h-8 bg-emerald-600 text-white font-bold rounded-lg flex items-center justify-center mb-3">4</div>
-                        <h4 class="font-bold text-slate-800 text-base mb-2">Cashflow & Plan Inversor</h4>
-                        <ul class="text-xs text-slate-600 space-y-2">
-                            <li>• Cashflow proyectado a 90 días (ingresos reales + egresos).</li>
-                            <li>• Fijación de retiro mensual para la profesional.</li>
-                            <li>• Colocación de remanentes en planes de inversión con asesores financieros.</li>
-                        </ul>
-                    </div>
                 </div>
             </div>
         </div>
 
     </main>
 
-    <!-- Scripts -->
+    <!-- Script de Navegación por Pestañas e Interacción -->
     <script>
+        // Función para cambiar de Pestaña (Tabs)
+        function switchTab(tabId, btnElement) {
+            // Ocultar todos los contenidos de pestañas
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            
+            // Quitar clase activa de todos los botones
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            // Mostrar la pestaña seleccionada
+            document.getElementById(tabId).classList.remove('hidden');
+            
+            // Activar botón clickeado
+            btnElement.classList.add('active');
+        }
+
+        // Función para Acordeón (Desplegable)
         function toggleAccordion(contentId, iconId) {
             const content = document.getElementById(contentId);
             const icon = document.getElementById(iconId);
@@ -400,7 +468,7 @@
             }
         }
 
-        // Init Charts
+        // Charts Init
         const ctxMatch = document.getElementById('chartMatching').getContext('2d');
         new Chart(ctxMatch, {
             type: 'bar',
