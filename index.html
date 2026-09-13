@@ -52,6 +52,9 @@
                 <button onclick="switchTab('tab-roadmap', this)" class="tab-btn py-3 px-5 text-slate-300 hover:text-white transition flex items-center gap-2 cursor-pointer whitespace-nowrap">
                     <i class="fa-solid fa-route text-purple-400"></i> Roadmap Primeras 2 Semanas
                 </button>
+<button onclick="solicitarAccesoRelevamiento()" class="tab-btn py-3 px-5 text-slate-300 hover:text-white transition flex items-center gap-2 cursor-pointer whitespace-nowrap bg-amber-500/10 border border-amber-500/30 text-amber-300 rounded-lg">
+    <i class="fa-solid fa-lock text-amber-400"></i> Relevamiento Interno (Exclusivo Lógica)
+</button>
             </div>
         </div>
     </header>
@@ -512,5 +515,20 @@
             }
         });
     </script>
+    <script>
+    function solicitarAccesoRelevamiento() {
+        // Clave de acceso definida para la consultoría (puedes cambiar 'logica2026' por la que gustes)
+        const PIN_CORRECTO = "logica2026";
+        
+        const pinIngresado = prompt("Acceso Restringido — Consultoría Lógica\n\nPor favor, ingresa la clave de acceso para ver el formulario de relevamiento:");
+        
+        if (pinIngresado === PIN_CORRECTO) {
+            // Redirige al archivo subido
+            window.location.href = "relevamiento.html";
+        } else if (pinIngresado !== null) {
+            alert("Clave incorrecta. Acceso no autorizado.");
+        }
+    }
+</script>
 </body>
 </html>
