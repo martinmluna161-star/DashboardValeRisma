@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relevamiento Diagnóstico 360° — Laboratorio Anatomía Patológica | Lógica</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- SheetJS (xlsx) CDN para exportación nativa -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <style>
+        body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background-color: #f8fafc; }
+        .nav-item.active {
+            background-color: #2563eb;
+            color: #ffffff;
+            font-weight: 600;
+        }
+        .nav-item.active i { color: #ffffff; }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col">
+
+    <!-- Header Principal -->
+    <header class="bg-slate-900 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-blue-600 p-2 rounded-lg text-white">
+                    <i class="fa-solid fa-microscope text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold leading-tight">LÓGICA — Relevamiento Diagnóstico 360°</h1>
+                    <p class="text-xs text-slate-400">Cliente: Dra. Risma María Valentina | Laboratorio de Anatomía Patológica</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3 mt-2 sm:mt-0">
+                <button onclick="exportToExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 shadow cursor-pointer">
+                    <i class="fa-solid fa-file-excel text-sm"></i> Exportar a Excel (.xlsx)
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Layout Principal -->
+    <div class="max-w-7xl mx-auto px-4 py-6 flex-grow flex flex-col md:flex-row gap-6 w-full">
+
+        <!-- Sidebar / Menú de Navegación de Secciones (A-K) -->
+        <aside class="w-full md:w-80 flex-shrink-0">
+            <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-4 sticky top-20">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-3 px-2">Dimensiones del Relevamiento</h2>
+                <nav class="space-y-1 text-xs" id="sidebar-nav">
+                    <button onclick="showSection('sec-A', this)" class="nav-item active w-full text-left px-3 py-2.5 rounded-xl flex items-center justify-between text-slate-700 hover:bg-slate-100 transition cursor-pointer">
+                        <span class="truncate"><i class="fa-solid fa-building text-blue-500 w-5"></i> A. Perfil Estratégico</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
+                    </button>
+                    <button onclick="showSection('sec-B', this)" class="nav-item w-full text-left px-3 py-2.5 rounded-xl flex items-center justify-between text-slate-700 hover:bg-slate-100 transition cursor-pointer">
+                        <span class="truncate"><i class="fa-solid fa-diagram-project text-indigo-500 w-5"></i> B. Proceso Operativo</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
+                    </button>
+                    <button onclick="showSection('sec-C', this)" class="nav-item w-full text-left px-3 py-2.5 rounded-xl flex items-center justify-between text-slate-700 hover:bg-slate-100 transition cursor-pointer">
+                        <span class="truncate"><i class="fa-solid fa-server text-purple-500 w-5"></i> C. Sistema Actual (LIS/ERP)</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
+                    </button>
+                    <button onclick="showSection('sec-D', this)" class="nav-item w-full text-left px-3 py-2.5 rounded-xl flex items-center justify-between text-slate-700 hover:bg-slate-100 transition cursor-pointer">
+                        <span class="truncate"><i class="fa-solid fa-file-invoice-dollar text-emerald-500 w-5"></i> D. Facturación y Cobranzas</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
+                    </button>
+                    <button onclick="showSection('sec-E', this)" class="nav-item w-full text-left px-3 py-2.5 rounded-xl flex items-center justify-between text-slate-700 hover:bg-slate-100 transition cursor-pointer">
+                        <span class="truncate"><i class="fa-solid fa-calculator text-amber-500 w-5"></i> E. Información Contable</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
+                    </button>
+                    <button onclick="showSection('sec-F', this)" class="nav-item w-full text-left px-3 py-2.5 rounded-xl flex items-center justify-between text-slate-700 hover:bg-slate-100 transition cursor-pointer">
+                        <span class="truncate"><i class="fa-solid fa-users-gear text-rose-500 w-5"></i> F. Recursos Humanos & Secretario</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
+                    </button>
+                    <button onclick="showSection('sec-G', this)" class="nav-item w-full text-left px-3 py-2.5 rounded-xl flex items-center justify-between text-slate-700 hover:bg-slate-100 transition cursor-pointer">
+                        <span class="truncate"><i class="fa-solid fa-user-doctor text-cyan-500 w-5"></i> G. Médicos Derivantes</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
+                    </button>
+                    <button onclick="showSection('sec-H', this)" class="nav-item w-full text-left px-3 py-2.5 rounded-xl flex items-center justify-between text-slate-700 hover:bg-slate-100 transition cursor-pointer">
+                        <span class="truncate"><i class="fa-solid fa-hospital-user text-teal-500 w-5"></i> H. Experiencia del Paciente</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
+                    </button>
+                    <button onclick="showSection('sec-I', this)" class="nav-item w-full text-left px-3 py-2.5 rounded-xl flex items-center justify-between text-slate-700 hover:bg-slate-100 transition cursor-pointer">
+                        <span class="truncate"><i class="fa-solid fa-check-to-slot text-orange-500 w-5"></i> I. Calidad y Trazabilidad</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
+                    </button>
+                    <button onclick="showSection('sec-J', this)" class="nav-item w-full text-left px-3 py-2.5 rounded-xl flex items-center justify-between text-slate-700 hover:bg-slate-100 transition cursor-pointer">
+                        <span class="truncate"><i class="fa-solid fa-network-wired text-blue-600 w-5"></i> J. Tecnología e Integraciones</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
+                    </button>
+                    <button onclick="showSection('sec-K', this)" class="nav-item w-full text-left px-3 py-2.5 rounded-xl flex items-center justify-between text-slate-700 hover:bg-slate-100 transition cursor-pointer">
+                        <span class="truncate"><i class="fa-solid fa-chart-pie text-violet-600 w-5"></i> K. Dashboard 360°</span>
+                        <i class="fa-solid fa-chevron-right text-[10px] opacity-60"></i>
+                    </button>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Contenedor del Formulario -->
+        <main class="flex-grow bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-8">
+            <form id="relevamiento-form">
+
+                <!-- SECCIÓN A -->
+                <div id="sec-A" class="form-section space-y-6">
+                    <div class="border-b border-slate-200 pb-4">
+                        <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Dimensión A</span>
+                        <h2 class="text-xl font-bold text-slate-900 mt-1">Perfil Estratégico del Laboratorio</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Servicios y Especialidades Principales</label>
+                            <textarea name="A_servicios" rows="3" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Biopsias, citologías, inmunohistoquímica, intraoperatorias..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Volumen de Trabajo Promedio (Mensual)</label>
+                            <textarea name="A_volumen" rows="3" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Cantidad de casos/estudios totales por mes..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Principales Grupos de Clientes / Canales</label>
+                            <textarea name="A_clientes" rows="3" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Hospital de la Villa, Círculo Médico San Luis, Sanatorios, Obras Sociales directas..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Perfil de Médicos Derivantes y Pacientes</label>
+                            <textarea name="A_perfil_derivantes" rows="3" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Ginecólogos, cirujanos, gastroenterólogos, particulares..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Propuesta de Valor & Posicionamiento</label>
+                            <textarea name="A_propuesta_valor" rows="3" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Excelencia profesional, rigor técnico, especialización Harvard..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Objetivos de Crecimiento y Dolores Principales</label>
+                            <textarea name="A_objetivos_dolores" rows="3" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Agotamiento por carga administrativa, falta de tiempo, desorden en cobranzas..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN B -->
+                <div id="sec-B" class="form-section space-y-6 hidden">
+                    <div class="border-b border-slate-200 pb-4">
+                        <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Dimensión B</span>
+                        <h2 class="text-xl font-bold text-slate-900 mt-1">Mapa Completo del Proceso Operativo</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">1. Ingreso de Práctica e Identificación del Paciente</label>
+                            <textarea name="B_ingreso_paciente" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder="Cómo se recepciona la solicitud y se toman datos de filiación..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">2. Recepción de Material (Muestras, Bloques y Láminas)</label>
+                            <textarea name="B_recepcion_material" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder="Rotulado, conservación, medio de transporte y recepción..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">3. Procesamiento Técnico y Técnicas Adicionales</label>
+                            <textarea name="B_procesamiento_tecnico" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder="Inclusión en parafina, corte, tinción, técnicas especiales (IHQ)..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">4. Análisis Profesional y Lectura Microscópica</label>
+                            <textarea name="B_analisis_diagnostico" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder="Asignación del caso, dictado de diagnóstico, notas..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">5. Elaboración, Validación y Firma del Informe</label>
+                            <textarea name="B_elaboracion_informe" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder="Tipeo del secretario, revisión del profesional, firma digital/física..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">6. Entrega, Archivo de Trazabilidad y Muestras</label>
+                            <textarea name="B_entrega_archivo" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:outline-none" placeholder="Canal de entrega, guardado de tacos/láminas, tiempo de retención..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN C -->
+                <div id="sec-C" class="form-section space-y-6 hidden">
+                    <div class="border-b border-slate-200 pb-4">
+                        <span class="text-xs font-bold text-purple-600 uppercase tracking-wider">Dimensión C</span>
+                        <h2 class="text-xl font-bold text-slate-900 mt-1">Sistema Actual (LIS / ERP) y Alternativas</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Nombre del Sistema Actual y Proveedor</label>
+                            <input type="text" name="C_nombre_sistema" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-purple-500 focus:outline-none" placeholder="Ej. LIS local, ERP a medida, Excel...">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Módulos Activos y Roles de Usuario</label>
+                            <input type="text" name="C_modulos_activos" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-purple-500 focus:outline-none" placeholder="Recepción, Facturación, Informes, etc.">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Gestión de Prestaciones y Carga de Valores</label>
+                            <textarea name="C_gestion_valores" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-purple-500 focus:outline-none" placeholder="¿Cómo se cargan las prestaciones y aranceles? ¿Permite valores $0?"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Capacidad de Reportes y Exportación</label>
+                            <textarea name="C_reportes_exportacion" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-purple-500 focus:outline-none" placeholder="¿Exporta a Excel, CSV, PDF? ¿Permite reportes a medida?"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Integraciones, APIs y Trazabilidad</label>
+                            <textarea name="C_integraciones_api" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-purple-500 focus:outline-none" placeholder="¿Tiene API? ¿Se conecta con microscopios o facturación electrónica?"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Nuevo Sistema en Evaluación (Decisión de Cambio)</label>
+                            <textarea name="C_nuevo_sistema_eval" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-purple-500 focus:outline-none" placeholder="Nombre de los software en evaluación y funcionalidades deseadas..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN D -->
+                <div id="sec-D" class="form-section space-y-6 hidden">
+                    <div class="border-b border-slate-200 pb-4">
+                        <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Dimensión D</span>
+                        <h2 class="text-xl font-bold text-slate-900 mt-1">Facturación, Liquidaciones y Cobranzas</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Determinación y Actualización de Aranceles</label>
+                            <textarea name="D_actualizacion_aranceles" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="¿Con qué frecuencia se actualizan nomencladores y quién lo hace?"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Mecanismo de Presentación por Cliente</label>
+                            <textarea name="D_presentacion_clientes" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Formatos de factura enviados a sanatorios, Círculo Médico y obras sociales..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Recepción y Conciliación de Liquidaciones</label>
+                            <textarea name="D_conciliacion_liquidaciones" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="¿Cómo se comparan los montos liquidados vs la producción del sistema?"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Detección y Gestión de Reclamos (Prestaciones Faltantes)</label>
+                            <textarea name="D_gestion_reclamos" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Proceso para reclamar lo no cobrado o trabado por 'DEBE FICHA'..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Flujo Específico del Círculo Médico de San Luis</label>
+                            <textarea name="D_flujo_circulo_medico" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Circuito de presentación, retenciones y cobro del Círculo Médico..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Flujo Específico de Hospitales y Obras Sociales Directas</label>
+                            <textarea name="D_flujo_hospitales_os" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 focus:outline-none" placeholder="Circuito con Hospital de la Villa, DOSEP, OSDE, PAMI, etc..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN E -->
+                <div id="sec-E" class="form-section space-y-6 hidden">
+                    <div class="border-b border-slate-200 pb-4">
+                        <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Dimensión E</span>
+                        <h2 class="text-xl font-bold text-slate-900 mt-1">Información Contable e Impositiva</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Relación y Entrega de Datos al Estudio Contable</label>
+                            <textarea name="E_relacion_contador" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-amber-500 focus:outline-none" placeholder="¿Qué reporte se le envía al contador, cuándo y en qué formato?"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Gestión de Retenciones Impositivas Sufridas</label>
+                            <textarea name="E_retenciones_sufridas" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-amber-500 focus:outline-none" placeholder="Control de certificados de IIBB San Luis, Ganancias, IVA..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Carga y Sistematización de Facturas de Gastos (Compras)</label>
+                            <textarea name="E_carga_gastos" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-amber-500 focus:outline-none" placeholder="¿Cómo se recopilan los comprobantes de proveedores y servicios?"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Proyección y Planificación de Impuestos (IVA/Ganancias)</label>
+                            <textarea name="E_proyeccion_impuestos" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-amber-500 focus:outline-none" placeholder="¿Recibe información anticipada de montos a pagar en el mes?"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN F -->
+                <div id="sec-F" class="form-section space-y-6 hidden">
+                    <div class="border-b border-slate-200 pb-4">
+                        <span class="text-xs font-bold text-rose-600 uppercase tracking-wider">Dimensión F</span>
+                        <h2 class="text-xl font-bold text-slate-900 mt-1">Recursos Humanos y Rol del Secretario</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Tareas Actuales de la Propietaria (Médica)</label>
+                            <textarea name="F_tareas_propietaria" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-rose-500 focus:outline-none" placeholder="Tareas administrativas que realiza activamente la profesional..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Tareas Actuales del Secretario</label>
+                            <textarea name="F_tareas_secretario" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-rose-500 focus:outline-none" placeholder="Carga de datos, atención telefónica, archivo, cobranzas..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Dinámica de Trabajo y Necesidad de Activación Constantemente</label>
+                            <textarea name="F_dinamica_activacion" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-rose-500 focus:outline-none" placeholder="Motivos por los cuales la profesional debe insistir sobre las tareas..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Oportunidades de Delegación y Automatización Operativa</label>
+                            <textarea name="F_oportunidades_delegacion" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-rose-500 focus:outline-none" placeholder="Tablero de pendientes diario para el secretario, alertas automáticas..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN G -->
+                <div id="sec-G" class="form-section space-y-6 hidden">
+                    <div class="border-b border-slate-200 pb-4">
+                        <span class="text-xs font-bold text-cyan-600 uppercase tracking-wider">Dimensión G</span>
+                        <h2 class="text-xl font-bold text-slate-900 mt-1">Experiencia de Médicos Derivantes</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Canal de Solicitud de Estudios y Consultas</label>
+                            <textarea name="G_canal_solicitud" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 focus:outline-none" placeholder="Papel, WhatsApp, e-mail, orden médica física..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Recepción y Consulta de Informes Históricos</label>
+                            <textarea name="G_recepcion_informes" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 focus:outline-none" placeholder="¿Cómo acceden a los resultados finalizados los médicos derivantes?"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Tiempos de Entrega y Notificaciones de Avance</label>
+                            <textarea name="G_tiempos_notificaciones" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 focus:outline-none" placeholder="¿Se notifica cuando el informe está listo o si se demora?"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Propuesta de Portal Profesional / Portal Médico</label>
+                            <textarea name="G_portal_profesional" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-cyan-500 focus:outline-none" placeholder="Interés en portal web seguro con usuario para los derivantes..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN H -->
+                <div id="sec-H" class="form-section space-y-6 hidden">
+                    <div class="border-b border-slate-200 pb-4">
+                        <span class="text-xs font-bold text-teal-600 uppercase tracking-wider">Dimensión H</span>
+                        <h2 class="text-xl font-bold text-slate-900 mt-1">Experiencia del Paciente y Branding</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Entrega de Resultados y Validación de Identidad</label>
+                            <textarea name="H_entrega_resultados" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="Entrega presencial, PDF por WhatsApp, código de retiro..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Acceso Digital (Portal Web, QR y Notificación WhatsApp)</label>
+                            <textarea name="H_acceso_digital" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="Descarga directa vía QR impreso en el talón de retiro..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Acceso a Historial Clínico de Patología</label>
+                            <textarea name="H_historial_clinico" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="¿El paciente puede ver estudios previos en el laboratorio?"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Identidad de Marca y Posicionamiento Profesional</label>
+                            <textarea name="H_identidad_marca" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-teal-500 focus:outline-none" placeholder="Encabezados de informes, papelería, presencia digital, marca personal..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN I -->
+                <div id="sec-I" class="form-section space-y-6 hidden">
+                    <div class="border-b border-slate-200 pb-4">
+                        <span class="text-xs font-bold text-orange-600 uppercase tracking-wider">Dimensión I</span>
+                        <h2 class="text-xl font-bold text-slate-900 mt-1">Calidad, Trazabilidad y Auditoría</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Trazabilidad de la Muestra (Muestras, Bloques y Láminas)</label>
+                            <textarea name="I_trazabilidad_muestra" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:outline-none" placeholder="Identificación física con código de barras o numeración interna..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Registro de Modificaciones y Auditoría de Sistema</label>
+                            <textarea name="I_registro_modificaciones" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:outline-none" placeholder="¿Queda registro de quién editó un informe o cambió un valor?"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Métricas de Tiempos por Etapa (SLA Interno)</label>
+                            <textarea name="I_tiempos_etapa" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:outline-none" placeholder="Tiempo medio desde recepción hasta diagnóstico final..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Gestión de Casos Pendientes y Alertas de Demora</label>
+                            <textarea name="I_alertas_demora" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-orange-500 focus:outline-none" placeholder="Alertas sobre informes frenados o casos atrasados..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN J -->
+                <div id="sec-J" class="form-section space-y-6 hidden">
+                    <div class="border-b border-slate-200 pb-4">
+                        <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Dimensión J</span>
+                        <h2 class="text-xl font-bold text-slate-900 mt-1">Tecnología, Microscopía e Integraciones</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Equipamiento Conectado e Instrumentación</label>
+                            <textarea name="J_equipamiento_conectado" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Procesadores de tejido, teñidores automáticos, impresoras de tacos..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Microscopía Digital y Gestión de Imágenes</label>
+                            <textarea name="J_microscopia_imagenes" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Cámaras adjuntas, escáneres de láminas, guardado de fotos clínicas..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Almacenamiento e Integración con Sistemas Externos</label>
+                            <textarea name="J_almacenamiento_servidor" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Servidor local, nube, backups, conexión HIS/RIS de sanatorios..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Requerimientos de Interoperabilidad</label>
+                            <textarea name="J_interoperabilidad" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-blue-500 focus:outline-none" placeholder="Formatos HL7, DICOM o consumo de web services externos..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN K -->
+                <div id="sec-K" class="form-section space-y-6 hidden">
+                    <div class="border-b border-slate-200 pb-4">
+                        <span class="text-xs font-bold text-violet-600 uppercase tracking-wider">Dimensión K</span>
+                        <h2 class="text-xl font-bold text-slate-900 mt-1">Dashboard Gerencial 360° Deseado</h2>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Indicadores Operativos Prioritarios</label>
+                            <textarea name="K_kpi_operativos" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-violet-500 focus:outline-none" placeholder="Casos ingresados, informes emitidos, tasa de retraso, pendientes..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Indicadores Económicos y Financieros</label>
+                            <textarea name="K_kpi_economicos" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-violet-500 focus:outline-none" placeholder="Producción valorizada, facturación real, liquidado vs cobrado, brecha $..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Visión Impositiva y Alertas de Flujo de Caja</label>
+                            <textarea name="K_vision_impositiva" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-violet-500 focus:outline-none" placeholder="Impuestos del mes estimados, saldo impositivo a favor, cashflow 90 días..."></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 mb-1">Alertas Automáticas de Gestión Deseadas</label>
+                            <textarea name="K_alertas_gestion" rows="2" class="w-full text-xs p-3 rounded-xl border border-slate-300 focus:ring-2 focus:ring-violet-500 focus:outline-none" placeholder="Alertas por cobros demorados, liquidaciones con quitas, rechazos..."></textarea>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </main>
+    </div>
+
+    <!-- Scripts de Navegación y Exportación a Excel -->
+    <script>
+        // Función para cambiar de sección en el formulario
+        function showSection(sectionId, btnElement) {
+            // Ocultar todas las secciones
+            document.querySelectorAll('.form-section').forEach(sec => sec.classList.add('hidden'));
+            
+            // Quitar clase activa del sidebar
+            document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+            
+            // Mostrar la sección seleccionada
+            document.getElementById(sectionId).classList.remove('hidden');
+            
+            // Activar botón del menú
+            btnElement.classList.add('active');
+
+            // Scroll suave hacia arriba en el panel principal
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Función para exportar los datos recopilados directamente a Excel (.xlsx)
+        function exportToExcel() {
+            const form = document.getElementById('relevamiento-form');
+            const formData = new FormData(form);
+            
+            // Crear matriz de datos para el Excel
+            const excelData = [
+                ["ID Campo", "Dimensión / Categoría", "Pregunta / Aspecto Relevado", "Respuesta / Detalle Relevado en Vivo"]
+            ];
+
+            // Mapeo legible para los encabezados de Excel
+            const fieldLabels = {
+                // Sección A
+                "A_servicios": ["Dimensión A: Perfil Estratégico", "Servicios y Especialidades Principales"],
+                "A_volumen": ["Dimensión A: Perfil Estratégico", "Volumen de Trabajo Promedio (Mensual)"],
+                "A_clientes": ["Dimensión A: Perfil Estratégico", "Principales Grupos de Clientes / Canales"],
+                "A_perfil_derivantes": ["Dimensión A: Perfil Estratégico", "Perfil de Médicos Derivantes y Pacientes"],
+                "A_propuesta_valor": ["Dimensión A: Perfil Estratégico", "Propuesta de Valor & Posicionamiento"],
+                "A_objetivos_dolores": ["Dimensión A: Perfil Estratégico", "Objetivos de Crecimiento y Dolores Principales"],
+
+                // Sección B
+                "B_ingreso_paciente": ["Dimensión B: Proceso Operativo", "1. Ingreso de Práctica e Identificación del Paciente"],
+                "B_recepcion_material": ["Dimensión B: Proceso Operativo", "2. Recepción de Material (Muestras, Bloques y Láminas)"],
+                "B_procesamiento_tecnico": ["Dimensión B: Proceso Operativo", "3. Procesamiento Técnico y Técnicas Adicionales"],
+                "B_analisis_diagnostico": ["Dimensión B: Proceso Operativo", "4. Análisis Profesional y Lectura Microscópica"],
+                "B_elaboracion_informe": ["Dimensión B: Proceso Operativo", "5. Elaboración, Validación y Firma del Informe"],
+                "B_entrega_archivo": ["Dimensión B: Proceso Operativo", "6. Entrega, Archivo de Trazabilidad y Muestras"],
+
+                // Sección C
+                "C_nombre_sistema": ["Dimensión C: Sistema Actual & LIS", "Nombre del Sistema Actual y Proveedor"],
+                "C_modulos_activos": ["Dimensión C: Sistema Actual & LIS", "Módulos Activos y Roles de Usuario"],
+                "C_gestion_valores": ["Dimensión C: Sistema Actual & LIS", "Gestión de Prestaciones y Carga de Valores"],
+                "C_reportes_exportacion": ["Dimensión C: Sistema Actual & LIS", "Capacidad de Reportes y Exportación"],
+                "C_integraciones_api": ["Dimensión C: Sistema Actual & LIS", "Integraciones, APIs y Trazabilidad"],
+                "C_nuevo_sistema_eval": ["Dimensión C: Sistema Actual & LIS", "Nuevo Sistema en Evaluación (Decisión de Cambio)"],
+
+                // Sección D
+                "D_actualizacion_aranceles": ["Dimensión D: Facturación y Cobranzas", "Determinación y Actualización de Aranceles"],
+                "D_presentacion_clientes": ["Dimensión D: Facturación y Cobranzas", "Mecanismo de Presentación por Cliente"],
+                "D_conciliacion_liquidaciones": ["Dimensión D: Facturación y Cobranzas", "Recepción y Conciliación de Liquidaciones"],
+                "D_gestion_reclamos": ["Dimensión D: Facturación y Cobranzas", "Detección y Gestión de Reclamos (Prestaciones Faltantes)"],
+                "D_flujo_circulo_medico": ["Dimensión D: Facturación y Cobranzas", "Flujo Específico del Círculo Médico de San Luis"],
+                "D_flujo_hospitales_os": ["Dimensión D: Facturación y Cobranzas", "Flujo Específico de Hospitales y Obras Sociales Directas"],
+
+                // Sección E
+                "E_relacion_contador": ["Dimensión E: Información Contable", "Relación y Entrega de Datos al Estudio Contable"],
+                "E_retenciones_sufridas": ["Dimensión E: Información Contable", "Gestión de Retenciones Impositivas Sufridas"],
+                "E_carga_gastos": ["Dimensión E: Información Contable", "Carga y Sistematización de Facturas de Gastos (Compras)"],
+                "E_proyeccion_impuestos": ["Dimensión E: Información Contable", "Proyección y Planificación de Impuestos (IVA/Ganancias)"],
+
+                // Sección F
+                "F_tareas_propietaria": ["Dimensión F: Recursos Humanos & Secretario", "Tareas Actuales de la Propietaria (Médica)"],
+                "F_tareas_secretario": ["Dimensión F: Recursos Humanos & Secretario", "Tareas Actuales del Secretario"],
+                "F_dinamica_activacion": ["Dimensión F: Recursos Humanos & Secretario", "Dinámica de Trabajo y Necesidad de Activación Constantemente"],
+                "F_oportunidades_delegacion": ["Dimensión F: Recursos Humanos & Secretario", "Oportunidades de Delegación y Automatización Operativa"],
+
+                // Sección G
+                "G_canal_solicitud": ["Dimensión G: Médicos Derivantes", "Canal de Solicitud de Estudios y Consultas"],
+                "G_recepcion_informes": ["Dimensión G: Médicos Derivantes", "Recepción y Consulta de Informes Históricos"],
+                "G_tiempos_notificaciones": ["Dimensión G: Médicos Derivantes", "Tiempos de Entrega y Notificaciones de Avance"],
+                "G_portal_profesional": ["Dimensión G: Médicos Derivantes", "Propuesta de Portal Profesional / Portal Médico"],
+
+                // Sección H
+                "H_entrega_resultados": ["Dimensión H: Experiencia del Paciente", "Entrega de Resultados y Validación de Identidad"],
+                "H_acceso_digital": ["Dimensión H: Experiencia del Paciente", "Acceso Digital (Portal Web, QR y Notificación WhatsApp)"],
+                "H_historial_clinico": ["Dimensión H: Experiencia del Paciente", "Acceso a Historial Clínico de Patología"],
+                "H_identidad_marca": ["Dimensión H: Experiencia del Paciente", "Identidad de Marca y Posicionamiento Profesional"],
+
+                // Sección I
+                "I_trazabilidad_muestra": ["Dimensión I: Calidad y Trazabilidad", "Trazabilidad de la Muestra (Muestras, Bloques y Láminas)"],
+                "I_registro_modificaciones": ["Dimensión I: Calidad y Trazabilidad", "Registro de Modificaciones y Auditoría de Sistema"],
+                "I_tiempos_etapa": ["Dimensión I: Calidad y Trazabilidad", "Métricas de Tiempos por Etapa (SLA Interno)"],
+                "I_alertas_demora": ["Dimensión I: Calidad y Trazabilidad", "Gestión de Casos Pendientes y Alertas de Demora"],
+
+                // Sección J
+                "J_equipamiento_conectado": ["Dimensión J: Tecnología e Integraciones", "Equipamiento Conectado e Instrumentación"],
+                "J_microscopia_imagenes": ["Dimensión J: Tecnología e Integraciones", "Microscopía Digital y Gestión de Imágenes"],
+                "J_almacenamiento_servidor": ["Dimensión J: Tecnología e Integraciones", "Almacenamiento e Integración con Sistemas Externos"],
+                "J_interoperabilidad": ["Dimensión J: Tecnología e Integraciones", "Requerimientos de Interoperabilidad"],
+
+                // Sección K
+                "K_kpi_operativos": ["Dimensión K: Dashboard 360°", "Indicadores Operativos Prioritarios"],
+                "K_kpi_economicos": ["Dimensión K: Dashboard 360°", "Indicadores Económicos y Financieros"],
+                "K_vision_impositiva": ["Dimensión K: Dashboard 360°", "Visión Impositiva y Alertas de Flujo de Caja"],
+                "K_alertas_gestion": ["Dimensión K: Dashboard 360°", "Alertas Automáticas de Gestión Deseadas"]
+            };
+
+            for (let [key, value] of formData.entries()) {
+                const meta = fieldLabels[key] || ["General", key];
+                excelData.push([key, meta[0], meta[1], value || "(Sin completar)"]);
+            }
+
+            // Generar libro de trabajo Excel usando SheetJS
+            const wb = XLSX.utils.book_new();
+            const ws = XLSX.utils.aoa_to_sheet(excelData);
+
+            // Ajustar anchos de columna
+            ws['!cols'] = [
+                { wch: 25 },
+                { wch: 35 },
+                { wch: 55 },
+                { wch: 70 }
+            ];
+
+            XLSX.utils.book_append_sheet(wb, ws, "Relevamiento 360");
+
+            // Descargar el archivo Excel con fecha y nombre de la clienta
+            const dateStr = new Date().toISOString().slice(0, 10);
+            XLSX.writeFile(wb, `Relevamiento_AnatomiaPatologica_RismaValentina_${dateStr}.xlsx`);
+        }
+    </script>
+</body>
+</html>
